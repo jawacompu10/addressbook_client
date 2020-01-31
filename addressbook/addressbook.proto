@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package addressbook;
+
+import "google/protobuf/timestamp.proto";
+
+service AddressBook {
+  // Get an address with the specified ID
+  rpc GetAddress(AddressID) returns (Address) {}
+
+  // Get all addresses belonging to the specified user
+  rpc GetUserAddresses(UserID) returns (stream Address) {}
+
+  // Add the given address
+  rpc AddAddress(Address) returns (Address) {}
+
+  // Update an existing address
+  rpc UpdateAddress(Address) returns (Address) {}
+}
+
+message AddressID {
+  string ID = 1;
+}
+
+message UserID {
+  string ID = 1;
+}
+
+message Address {
+  string ID = 1;
+  string UserID = 2;
+  string Name = 3;
+  bool IsDefault = 4;
+  string Note = 5;
+  string Lat = 6;
+  string Long = 7;
+  map<string, string> Details = 8;
+  google.protobuf.Timestamp CreatedAt = 9;
+  google.protobuf.Timestamp ModifiedAt = 10;
+}
